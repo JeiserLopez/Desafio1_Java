@@ -5,6 +5,11 @@
  */
 package Vistas;
 
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
+
 /**
  *
  * @author jeise
@@ -17,7 +22,6 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,11 +31,22 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBoxTipoConversor = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Conversor");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Moneda", "Temperatura", "Tiempo" }));
+        jComboBoxTipoConversor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Moneda", "Temperatura", "Tiempo" }));
+        jComboBoxTipoConversor.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxTipoConversorItemStateChanged(evt);
+            }
+        });
+        jComboBoxTipoConversor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxTipoConversorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -39,19 +54,66 @@ public class Principal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(78, 78, 78)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBoxTipoConversor, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(81, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(52, 52, 52)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(228, Short.MAX_VALUE))
+                .addComponent(jComboBoxTipoConversor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(226, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jComboBoxTipoConversorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTipoConversorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxTipoConversorActionPerformed
+
+    private void jComboBoxTipoConversorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxTipoConversorItemStateChanged
+        // TODO add your handling code here:
+        if (jComboBoxTipoConversor.getSelectedItem().toString() == "Seleccione"){
+              JOptionPane.showMessageDialog(null, "Debe seleccionar un tipo de conversión");
+        }
+        if (jComboBoxTipoConversor.getSelectedItem().toString() == "Moneda"){
+              String valorCombo = JOptionPane.showInputDialog(null,"Ingresa la cantidad de dinero que deseas convertir",
+                      "Convertor", JOptionPane.QUESTION_MESSAGE);
+              while (valorCombo.isEmpty()){
+                  valorCombo = JOptionPane.showInputDialog(null,"Ingresa la cantidad de dinero que deseas convertir",
+                      "Convertor", JOptionPane.QUESTION_MESSAGE);  
+              }
+             double valorConvertir = 0;
+             if (!valorCombo.isEmpty()){
+                 valorConvertir = Double.parseDouble(valorCombo);
+             }
+             else{
+                 JOptionPane.showMessageDialog(null, "Debe Ingresar un monto mayor a 0");
+             }
+             System.out.println(valorConvertir);
+              try{
+                if(valorConvertir > 0){
+                       String[] options = {"Dolares", "Euros", "Bolivares", "", "", ""};
+                       Image icon = new ImageIcon("src/img/Monedas.png").getImage();
+                       ImageIcon icon2 = new ImageIcon(icon.getScaledInstance(100, 124,Image.SCALE_SMOOTH));
+                       String n = (String)JOptionPane.showInputDialog(null, "Seleccione la moneda", 
+                       "Monedas", JOptionPane.QUESTION_MESSAGE, icon2, options, options[0]);
+                       System.out.println(n);
+                       if(n == "Dolares"){
+                           double valorConvertido = valorConvertir / 4000;
+                            JOptionPane.showMessageDialog(null, "El valor Convertido es: " + valorConvertido +" "+n);
+                       }
+
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Debe Ingresar un monto");
+                }
+              }catch(Exception e){
+                  JOptionPane.showMessageDialog(null, "Debe Ingresar un monto");
+              }
+        }
+    }//GEN-LAST:event_jComboBoxTipoConversorItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -87,8 +149,15 @@ public class Principal extends javax.swing.JFrame {
             }
         });
     }
+    
+
+
+    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBoxTipoConversor;
     // End of variables declaration//GEN-END:variables
+    
 }
+               
